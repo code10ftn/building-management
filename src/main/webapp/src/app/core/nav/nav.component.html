@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="#">Buildings App</a>
+  <button (click)="isCollapsed = !isCollapsed" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" [collapse]="isCollapsed">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" *ngIf="isAuthenticated()" id="buildingsButton">
+        <a class="nav-link" routerLink="/buildings">Buildings</a>
+      </li>
+      <li class="nav-item" *ngIf="hasBuilding()">
+        <a class="nav-link" [routerLink]="['buildings', getBuildingId()]">My Building</a>
+      </li>
+      <li class="nav-item" *ngIf="hasResidentialRequests()" id="requestsButton">
+        <a class="nav-link" routerLink="/residentialRequests">Requests</a>
+      </li>
+      <li class="nav-item" *ngIf="hasBuilding()" id="announcementsButton">
+        <a class="nav-link" [routerLink]="['buildings', getBuildingId(), 'announcements']">Announcements</a>
+      </li>
+      <li class="nav-item" *ngIf="hasBuilding()">
+        <a class="nav-link" [routerLink]="['buildings', getBuildingId(), 'meetings']" id="meetingsButton">Meetings</a>
+      </li>
+      <li class="nav-item" *ngIf="hasBuilding()">
+        <a class="nav-link" [routerLink]="['buildings', getBuildingId(), 'malfunctions']" id="malfunctionsButton">Malfunctions</a>
+      </li>
+      <li class="nav-item" *ngIf="isCompany()">
+        <a class="nav-link" [routerLink]="['malfunctions']" id="companyMalfunctionsButton">Assigned malfunctions</a>
+      </li>
+      <li class="nav-item" *ngIf="hasBuilding()">
+        <a class="nav-link" [routerLink]="['buildings', getBuildingId(), 'surveys']" id="surveysButton">Surveys</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item" *ngIf="!isAuthenticated()">
+        <a class="nav-link" routerLink="/signup">Signup</a>
+      </li>
+      <li class="nav-item" *ngIf="!isAuthenticated()">
+        <a class="nav-link" routerLink="/signin">Signin</a>
+      </li>
+      <li class="nav-item" *ngIf="isAuthenticated()" id="signoutButton">
+        <a class="nav-link" (click)="signout()">Sign out</a>
+      </li>
+    </ul>
+  </div>
+</nav>

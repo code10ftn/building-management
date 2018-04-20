@@ -1,0 +1,14 @@
+<form class="form" (ngSubmit)="create()" #newBuildingForm="ngForm">
+  <h2 class="form-heading">New building</h2>
+
+  <label>Address</label>
+  <input type="text" class="form-control" [(ngModel)]="building.address" name="address" #addressInput (keyup)="checkAddressTaken(addressInput.value)"
+    required autofocus>
+  <div id="addressTakenLabel" *ngIf="addressTaken | async" class="unavailable">Address taken!</div>
+  <label>No. of apts</label>
+  <input type="number" class="form-control" [(ngModel)]="building.apartmentCount" min="1" oninput="validity.valid||(value='');"
+    name="aptCount" required>
+
+  <button id="createBuildingButton" [disabled]="((newBuildingForm.form.invalid) || (addressTaken | async))" class="btn btn-lg btn-primary btn-block"
+    type="submit">Create</button>
+</form>

@@ -1,0 +1,134 @@
+<h2 id="meetingTitle">Meeting scheduled for {{meeting.date | date: 'MMM d, y, HH:mm'}}</h2>
+<br>
+<div *ngIf="canCreateReport()">
+  <button type="button" class="btn btn-primary" (click)="enableReportMode()" id="createReportButton">
+    Write report
+  </button>
+</div>
+<div *ngIf="canEditReport()">
+  <button type="button" class="btn btn-primary" (click)="enableReportMode()">
+    Edit report
+  </button>
+</div>
+<div *ngIf="reportMode">
+  <button type="button" class="btn btn-primary" (click)="saveReport()" id="saveReportButton">
+    Save report
+  </button>
+  <button type="button" class="btn btn-primary" (click)="cancelReport()">
+    Cancel report
+  </button>
+</div>
+<br>
+
+<div class="row headers">
+  <div class="col-md-10">
+    <label class="info-label">Suggested topics</label>
+  </div>
+  <div class="col-md-1">
+    <label *ngIf="meeting.topics.length > 0" class="info-label align-right">Accepted</label>
+  </div>
+  <div class="col-md-1">
+  </div>
+</div>
+
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let topic of meeting.topics; let i = index">
+    <div class="row">
+      <div class="col-md-10">
+        {{topic.content}}
+      </div>
+      <div class="col-md-1">
+        <input [disabled]="!isSupervisor() || meetingPassed()" type="checkbox" class="align-right" (click)="setTopicStatus(topic)"
+          [checked]="topic.accepted">
+      </div>
+      <div class="col-md-1">
+        <i *ngIf="canRemoveTopic()" class="fa fa-times fa-2x align-right pointer" aria-hidden="true" (click)="removeTopic(topic)">
+        </i>
+      </div>
+    </div>
+    <div *ngIf="reportMode">
+      <input type="text" class="form-control" [(ngModel)]="newReport.comments[i].comment" [disabled]="!meeting.topics[i].accepted">
+    </div>
+    <div class="row">
+      <div *ngIf="shouldShowReport()" class="col-md-9 comment">
+        {{topic.comment}}
+      </div>
+    </div>
+  </li>
+  <li class="list-group-item" *ngIf="!meetingPassed()">
+    <div class="row">
+      <div class="col-md-3">
+        <label class="info-label">Submit topic suggestion</label>
+      </div>
+      <div class="col-md-9">
+        <form class="form medium" (ngSubmit)="addTopic()">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" [(ngModel)]="topic" name="topic" required>
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" type="submit" id="addTopicButton">Add</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </li>
+</ul>
+
+<br>
+<div *ngIf="reportMode">
+  <label class="info-label">Overall meeting report:</label>
+  <input type="text" class="form-control" [(ngModel)]="newReport.comment">
+</div>
+<div *ngIf="shouldShowReport()">
+  <p class="info-label">Overall meeting report:</p>
+  <div class="comment">
+    {{meeting.report.comment}}
+  </div>
+</div>
+
+<div *ngIf="canReschedule()">
+  <br>
+  <label class="info-label">Reschedule meeting</label>
+  <div class="row">
+    <div class="col-md-6">
+      <bm-datetime-picker></bm-datetime-picker>
+      <button class="btn btn-primary" [disabled]="datePassed()" (click)="updateMeeting()" id="rescheduleButton">Update</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="meeting.report" class="row">
+  <div class="col-md-6">
+    <h2>Malfunctions from last meeting</h2>
+
+    <ul class="list-group">
+      <li class="list-group-item pointer" *ngFor="let malfunction of meeting.report.malfunctions" (click)="openMalfunction(malfunction)">
+        <div class="row">
+          <div class="col-md-9">
+            {{malfunction.description}}
+          </div>
+          <div class="col-md-3">
+            {{malfunction.reportDate | date: 'MMM d, y'}}
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-md-6">
+    <h2>Survey results</h2>
+
+    <ul class="list-group">
+      <li class="list-group-item pointer" *ngFor="let survey of meeting.report.surveys" (click)="openSurvey(survey)">
+        <div class="row">
+          <div class="col-md-9">
+            {{survey.name}}
+          </div>
+          <div class="col-md-3">
+            {{survey.expirationDate | date: 'MMM d, y'}}
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

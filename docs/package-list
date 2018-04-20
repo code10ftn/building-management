@@ -1,0 +1,14 @@
+com.code10.kts
+com.code10.kts.config
+com.code10.kts.controller
+com.code10.kts.controller.exception
+com.code10.kts.controller.exception.resolver
+com.code10.kts.model.domain
+com.code10.kts.model.domain.user
+com.code10.kts.model.dto
+com.code10.kts.model.factory
+com.code10.kts.model.security
+com.code10.kts.repository
+com.code10.kts.security
+com.code10.kts.service
+com.code10.kts.service.impl

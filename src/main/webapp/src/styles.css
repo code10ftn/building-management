@@ -1,0 +1,74 @@
+@import '~@swimlane/ngx-datatable/release/index.css';
+@import '~@swimlane/ngx-datatable/release/themes/bootstrap.css';
+@import '~@swimlane/ngx-datatable/release/assets/icons.css';
+
+body {
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+
+.toast-position {
+    top: 68px;
+    right: 12px;
+}
+
+.form {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.medium {
+    max-width: 660px;
+}
+
+.form .form-heading {
+    margin-bottom: 20px;
+}
+
+.form .form-control {
+    position: relative;
+    box-sizing: border-box;
+    padding: 8px;
+    font-size: 16px;
+}
+
+.form-control:focus {
+    z-index: 2;
+}
+
+.form input[type="password"] {
+    margin-bottom: 20px;
+}
+
+.form label {
+    color: darkgrey;
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+
+.info-label {
+    color: darkgrey;
+}
+
+.icon-pad {
+    padding-left: 15px;
+    padding-right: 30px;
+}
+
+.spacing-top {
+    margin-top: 30px;
+}
+
+.align-right {
+    float:right;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.unavailable {
+    color: red;
+    float:right;
+}

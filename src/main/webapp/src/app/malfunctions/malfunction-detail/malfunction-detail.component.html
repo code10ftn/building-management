@@ -1,0 +1,111 @@
+<h3>Malfunction details</h3>
+<div class="row">
+  <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-4">
+        <p>Report date</p>
+      </div>
+      <div class="col-md-8">
+        <p>{{malfunction.reportDate| date:'MMM d, y, HH:mm'}}</p>
+      </div>
+    </div>
+    <form class="form-medium" (ngSubmit)="update()" #updateMalfunction="ngForm">
+      <div class="row">
+        <div class="col-md-4">
+          <p>Description</p>
+          <p>Work area</p>
+        </div>
+        <div class="col-md-8">
+          <textarea id="malDetailsDesc" type="text" class="form-control" [disabled]="!canEdit" [(ngModel)]="malfunction.description"
+            [disabled]="True" placeholder="Description" name="description" required></textarea>
+          <select id="workAreaSelect" class="bootstrap-select form-control" [disabled]="!canEdit" [(ngModel)]="malfunction.workArea"
+            name="malDetailsWorkArea" required>
+            <option id="workarea" *ngFor="let workArea of workAreas | workarea" value="{{workArea.key}}">{{workArea.value}}</option>
+          </select>
+        </div>
+      </div>
+      <button id="updateButton" *ngIf="canEdit" [disabled]="updateMalfunction.form.invalid" class="btn btn-lg btn-primary btn-block spacing-top"
+        type="submit">Update</button>
+    </form>
+    <br/>
+    <bm-comment-list [buildingId]="buildingId" [malfunctionId]="malfunctionId"></bm-comment-list>
+  </div>
+  <div class="col-md-6">
+    <bm-image-upload [buildingId]="buildingId" [malfunctionId]="malfunctionId" [enabled]='canEdit'></bm-image-upload>
+    <h4>Creator details</h4>
+    <div class="row">
+      <div class="col-md-4">
+        <p>Username</p>
+        <div *ngIf="malfunction?.creator?.firstName">
+          <p>First name</p>
+          <p>Last name</p>
+        </div>
+        <div *ngIf="malfunction?.creator?.name">
+          <p>Company name</p>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <p>{{malfunction?.creator?.username}}</p>
+        <div *ngIf="malfunction?.creator?.firstName">
+          <p>{{malfunction?.creator?.firstName}}</p>
+          <p>{{malfunction?.creator?.lastName}}</p>
+        </div>
+        <div *ngIf="malfunction?.creator?.name">
+          <p>{{malfunction?.creator?.name}}</p>
+        </div>
+      </div>
+    </div>
+    <h4>Assignee details</h4>
+    <div class="row">
+      <div class="col-md-4">
+        <p>Username</p>
+        <div *ngIf="malfunction?.assignee?.firstName">
+          <p>First name</p>
+          <p>Last name</p>
+        </div>
+        <div *ngIf="malfunction?.assignee?.name">
+          <p>Company name</p>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <p>{{malfunction?.assignee?.username}}</p>
+        <div *ngIf="malfunction?.assignee?.firstName">
+          <p>{{malfunction?.assignee?.firstName}}</p>
+          <p>{{malfunction?.assignee?.lastName}}</p>
+        </div>
+        <div *ngIf="malfunction?.assignee?.name">
+          <p>{{malfunction?.assignee?.name}}</p>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="malfunction.repairment">
+      <h4>Repairment</h4>
+      <div class="row">
+        <div class="col-md-4">
+          <p>Price </p>
+          <p>Repair date </p>
+        </div>
+        <div class="col-md-8">
+          <p>{{malfunction.repairment.price}}</p>
+          <p>{{malfunction.repairment.repairDate | date:'MMM d, y, HH:mm'}}</p>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!malfunction.repairment">
+      <button id="repairmentButton" type="button" class="btn btn-primary" (click)="createRepairment()" *ngIf="isAssignee && !malfunction.repairment">
+        Submit repairment
+      </button>
+      <div>
+        <form class="form-medium" (ngSubmit)="forward()" #forwardForm="ngForm" *ngIf="canForward()">
+          <h2 class="form-heading">Forward malfunction</h2>
+          <label for="workAreaSelect">Assignee</label>
+          <select id="assigneeSelect" class="bootstrap-select form-control" [(ngModel)]="newAssignee.assigneeId" name="assigneeSelect"
+            required>
+            <option *ngFor="let assignee of assignees" [ngValue]="assignee.id">{{assignee.username}}</option>
+          </select>
+          <button id="forwardButton" [disabled]="forwardForm.form.invalid" class="btn btn-lg btn-primary btn-block spacing-top" type="submit">Forward</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

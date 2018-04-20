@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-md-7">
+    <label class="info-label">Date</label>
+    <input type="text" [bsConfig]="bsConfig" class="form-control" [minDate]="minDate" [maxDate]="maxDate" #dp="bsDatepicker"
+      bsDatepicker [(ngModel)]="selectedDate" name="date" required>
+  </div>
+  <div class="col-md-5 col-centered">
+    <timepicker [hourStep]="1" [minuteStep]="1" [showMeridian]="false" [mousewheel]="false" [(ngModel)]="selectedTime" name="time"
+      [min]="minDate"></timepicker>
+  </div>
+</div>

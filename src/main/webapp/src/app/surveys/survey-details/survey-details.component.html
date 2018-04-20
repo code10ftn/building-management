@@ -1,0 +1,24 @@
+<h4>Survey Details</h4>
+<div class="row">
+  <div class="col-md-4">
+    <p>Survey Name</p>
+    <p>Expiration date</p>
+    <p>Completed by {{survey.answeredBy.length}}
+      <span *ngIf="survey.answeredBy.length === 1; else tenants">tenant</span>
+      <ng-template #tenants>tenants</ng-template>
+    </p>
+  </div>
+  <div class="col-md-8">
+    <p>{{survey.name}}</p>
+    <p>{{survey.expirationDate | date:'MMM d, y, HH:mm'}}</p>
+  </div>
+</div>
+<h4>Survey Questions</h4>
+<div *ngFor="let question of survey.questions, let i = index">
+  <p>{{i + 1}}. {{question.text}}</p>
+  <div *ngFor="let answer of question.answers, let j = index">
+    <p>{{answer.text}}
+      <span class="badge badge-success">{{answer.tenants.length}}</span>
+    </p>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    active: development
+    http:
+      multipart:
+        max-file-size: 500KB
+        max-request-size: 500KB
+
+token:
+  secret: sssshhhh!
+  expiration: 604800
+  header: X-Auth-Token
+
+storage-location: C:/malfunction_images

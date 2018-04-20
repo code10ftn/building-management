@@ -1,0 +1,17 @@
+<h3>
+  Building's companies</h3>
+<br/>
+<div class="input-group mb-3" *ngIf="isSupervisorOfBuilding()">
+  <input id="companyInput" type="text" class="form-control" [(ngModel)]="selectedCompany" name="selectedCompany" [typeahead]="companies"
+    typeaheadOptionField="name" (typeaheadOnSelect)="companySelected($event)" typeaheadGroupField="workArea" #content required>
+  <div class="input-group-append">
+    <button id="addCompanyButton" [disabled]="isSelectedCompanyValid()" class="btn btn-outline-secondary" type="button" (click)="assignCompany()">Add</button>
+  </div>
+</div>
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let company of building.companies">
+    {{company.name}}
+    <i class="fa fa-times fa-2x align-right pointer" *ngIf="isSupervisorOfBuilding()" aria-hidden="true" (click)="revokeCompany(company)">
+    </i>
+  </li>
+</ul>

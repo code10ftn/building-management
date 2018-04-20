@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <h3 class="col-md-10">Comments</h3>
+    <h4 class="col-md-2">{{comments?.length}}</h4>
+  </div>
+  <ul class=" list-group">
+    <li class="list-group-item" *ngFor="let comment of comments" id="comment.id">
+      <div class="row">
+        <div class="col-md-6">
+          <h4 class="float-left">{{comment.user.username}}</h4>
+        </div>
+        <div class="col-md-6">
+          <div class="float-right">{{comment.date | date:'MMM d, y, HH:mm'}}</div>
+        </div>
+        {{comment.content}}
+      </div>
+      <i id="delete_{{comment.id}}" class="fa fa-trash fa-2x icon-pad pointer float-right" *ngIf="canDelete(comment)" aria-hidden="true"
+        title="Delete" (click)="openConfirmDialog(comment)"></i>
+    </li>
+  </ul>
+  <form class="form-medium" (ngSubmit)="addComment()" #newCommentForm="ngForm">
+    <h2 class="form-heading">Add comment</h2>
+    <textarea id="commentText" class="form-control" [(ngModel)]="newComment.content" placeholder="Comment" name="comment" required></textarea>
+    <button id="commentButton" [disabled]="newCommentForm.form.invalid" class="btn btn-lg btn-primary btn-block spacing-top"
+      type="submit">Comment</button>
+  </form>
+</div>

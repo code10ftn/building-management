@@ -1,0 +1,13 @@
+<form class="form-medium" (ngSubmit)="create()" #newMalfunctionForm="ngForm">
+  <h2 class="form-heading">Repairment</h2>
+
+  <label>Price:</label>
+  <input id="priceInput" type="number" step="any" class="form-control" [(ngModel)]="repairment.price" placeholder="Price" name="price"
+    required autofocus>
+
+  <label>Repair date:</label>
+  <bm-datetime-picker [selectedDate]="initDate" [selectedTime]="initDate"></bm-datetime-picker>
+
+  <button id="repairmentSubmitButton" [disabled]="newMalfunctionForm.form.invalid || datePassed()" class="btn btn-lg btn-primary btn-block spacing-top"
+    type="submit">Submit</button>
+</form>

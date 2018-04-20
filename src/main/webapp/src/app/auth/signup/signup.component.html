@@ -1,0 +1,41 @@
+<form class="form" (ngSubmit)="signup()" #signupForm="ngForm">
+  <h2 class="form-heading">Sign up</h2>
+
+  <label>Role</label>
+  <select class="bootstrap-select form-control" [(ngModel)]="role" name="role" required>
+    <option value="TENANT" selected>Tenant</option>
+    <option value="COMPANY">Company</option>
+  </select>
+
+  <div *ngIf="role === 'TENANT'" id="tenantDiv">
+    <label>First name</label>
+    <input type="text" class="form-control" [(ngModel)]="tenant.firstName" id="firstName" name="firstName" required autofocus>
+    <label>Last name</label>
+    <input type="text" class="form-control" [(ngModel)]="tenant.lastName" id="lastName" name="lastName" required>
+  </div>
+  <div *ngIf="role === 'COMPANY'" id="companyDiv">
+    <label>Name</label>
+    <input type="text" class="form-control" [(ngModel)]="company.name" name="companyName" required>
+    <label>Address</label>
+    <input type="text" class="form-control" [(ngModel)]="company.address" name="address" required>
+    <label>Description</label>
+    <input type="text" class="form-control" [(ngModel)]="company.description" name="description" required>
+    <label>Work area</label>
+    <select class="bootstrap-select form-control" [(ngModel)]="company.workArea" name="workArea" required>
+      <option id="workarea" *ngFor="let workArea of workAreas | workarea" value="{{workArea.key}}">{{workArea.value}}</option>
+    </select>
+  </div>
+  <label>Phone number</label>
+  <input type="tel" class="form-control" [(ngModel)]="user.phoneNumber" name="phoneNumber" required>
+  <label>Username</label>
+  <input type="text" class="form-control" [(ngModel)]="user.username" #usernameInput (keyup)="checkUsernameTaken(usernameInput.value)"
+    name="username" required>
+  <div *ngIf="usernameTaken | async" class="unavailable">Username taken!</div>
+  <label>Email</label>
+  <input type="email" class="form-control" [(ngModel)]="user.email" name="email" required email>
+  <label>Password</label>
+  <input type="password" class="form-control" [(ngModel)]="user.password" name="password" required>
+
+  <button id="signupButton" [disabled]="((signupForm.form.invalid) || (usernameTaken | async))" class="btn btn-lg btn-primary btn-block"
+    type="submit">Sign up</button>
+</form>

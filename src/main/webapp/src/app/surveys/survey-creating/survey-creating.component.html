@@ -1,0 +1,46 @@
+<h3>Details</h3>
+<label>
+  <strong>Name:</strong>
+  <input type="text" [(ngModel)]="survey.name" name="surveyName" #surveyName="ngModel" placeholder="Survey name...">
+</label>
+<div *ngIf="invalidName() && surveyName.touched" class="alert alert-danger">
+  <strong>Warning!</strong> Name can't be empty.
+</div>
+<br>
+<label>
+  <strong>Expiration date:</strong>
+  <bm-datetime-picker></bm-datetime-picker>
+</label>
+
+<h3>Questions</h3>
+<div *ngFor="let question of survey.questions, let i = index">
+  <div>
+    <textarea name="questionText" #questionText="ngModel" [(ngModel)]="question.question" placeholder="Qustion..." cols="100"
+      rows="2" style="resize:none"></textarea>
+    <button id="addAnswerButton" type="button" class="btn btn-primary" (click)="addAnswer(question)">Add Answer</button>
+    <button type="button" class="btn btn-danger" (click)="deleteQuestion(question)">Remove Question</button>
+  </div>
+  <div>
+    <div *ngFor="let answer of question.answers, let j = index, trackBy:trackByFn">
+      <label>
+        <input type="text" [(ngModel)]="question.answers[j]" placeholder="Answer...">
+      </label>
+      <button type="button" class="btn btn-danger" (click)="deleteAnswer(question, answer)">-</button>
+    </div>
+
+  </div>
+  <div *ngIf="invalidQuestionAnswerNum(question) && questionText.touched" class="alert alert-danger">
+    <strong>Warning!</strong> Question must have minimum {{minAnswersNum}} answers.
+  </div>
+  <div *ngIf="invalidQuestionCharactersNum(question) && questionText.touched" class="alert alert-danger">
+    <strong>Warning!</strong> Question must have minimum {{minQuestionCharacters}} characters.
+  </div>
+</div>
+<br>
+
+
+
+<button type="button" class="btn btn-primary" (click)="addQuestion()">Add Question</button>
+<br>
+<br>
+<button id="createSurveyButton" type="button" class="btn btn-primary" [disabled]="createDisabled()" (click)="createSurvey()">Create Survey</button>

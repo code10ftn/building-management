@@ -1,0 +1,35 @@
+<div>
+  <button id="addBuildingButton" *ngIf="isAdmin()" type="button" class="btn btn-primary" (click)="goToNewBuilding()">
+    Add building
+  </button>
+  <ngx-datatable class="bootstrap" [rows]="rows" [columns]="[{name:'Address'}, {name:'Supervisor'}, {name:'No. of apts.'}]"
+    [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [externalPaging]="true" [count]="page.totalElements"
+    [offset]="page.pageNumber" [limit]="page.size" (page)='setPage($event)'>
+    <ngx-datatable-column name="Address"></ngx-datatable-column>
+    <ngx-datatable-column name="Supervisor">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        {{getName(value)}}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="apartments">
+      <ng-template let-sort="sortFn" ngx-datatable-header-template>
+        <span (click)="sort()" class="pointer">No. of apts</span>
+      </ng-template>
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        {{value.length}}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column>
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <i class="fa fa-info-circle fa-2x icon-pad pointer" title="Click to see building info" aria-hidden="true" (click)="showBuildingDetails(row)"></i>
+        <i class="fa fa-trash fa-2x icon-pad pointer" *ngIf="isAdmin()" aria-hidden="true" title="Delete" (click)="openConfirmDialog(row)">
+        </i>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Supervising" [sortable]="false" *ngIf="isSupervisor()">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{isSupervising(row)}}
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+</div>

@@ -1,0 +1,17 @@
+<div class="text-center">
+  <h3>{{survey.name}}</h3>
+  <br>
+  <div *ngFor="let question of survey.questions, let i = index">
+    <div>
+      <p>{{i + 1}}. {{question.text}}</p>
+    </div>
+
+    <div *ngFor="let answer of question.answers, let j = index">
+      <input type="radio" class="answer-radio" name={{i}} (click)="checkAnswer(answer.id, i)"> {{answer.text}}
+      <br>
+    </div>
+    <br>
+  </div>
+  <br>
+  <button id="answerSurveyButton" type="button" class="btn btn-primary" [disabled]="canAnswer()" (click)="answerSurvey()">Answer Survey</button>
+</div>

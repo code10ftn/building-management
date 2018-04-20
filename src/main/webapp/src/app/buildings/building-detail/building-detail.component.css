@@ -1,0 +1,14 @@
+.info-label p {
+    color: darkgrey;
+}
+
+#updateBuildingButton {
+    margin-bottom: 10px;
+}
+
+input:disabled {
+    border: 0;
+    padding: 0;
+    margin-bottom: 16px;
+    background-color: transparent;
+}

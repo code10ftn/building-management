@@ -1,0 +1,48 @@
+<ul class="nav">
+  <div *ngIf="isCompany()">
+    <li class="nav-item" *ngIf="isSupervisorOfBuilding()">
+      <a class="nav-link" routerLink="announcements">Announcements</a>
+    </li>
+    <li class="nav-item" *ngIf="isSupervisorOfBuilding()">
+      <a class="nav-link" routerLink="meetings">Meetings</a>
+    </li>
+    <li class="nav-item" *ngIf="isSupervisorOfBuilding() || isAssignedToBuilding()">
+      <a class="nav-link" routerLink="malfunctions">Malfunctions</a>
+    </li>
+  </div>
+  <li class="nav-item">
+    <a id="tenantsLink" class="nav-link" routerLink="tenants">Tenants</a>
+  </li>
+</ul>
+
+<div class="row">
+  <div class="col-md-6">
+    <h3>
+      Building details</h3>
+    <br/>
+    <div id="addressTakenLabel" *ngIf="addressTaken | async" class="unavailable">Address taken!</div>
+    <div class="row">
+      <div class="col-md-4 info-label">
+        <p>Address</p>
+        <p>Supervisor</p>
+        <p>No. of apts</p>
+      </div>
+      <div class="col-md-8">
+        <input id="addressInput" type="text" class="form-control" #addressInput [(ngModel)]="building.address" (keyup)="checkAddressTaken(addressInput.value)"
+          [disabled]="!isAdmin()" placeholder="Address" name="address" required autofocus>
+        <input id="supervisorInput" [(ngModel)]="selectedSupervisor" [disabled]="!isAdmin()" [typeahead]="supervisors" typeaheadOptionField="name"
+          (typeaheadOnSelect)="supervisorSelected($event)" class="form-control">
+        <p id="apartmentCountLabel">{{building.apartments.length || ""}}</p>
+      </div>
+    </div>
+    <button id="updateBuildingButton" *ngIf="isAdmin()" [disabled]="((building.address === '') || (addressTaken | async))" class="btn btn-lg btn-primary btn-block"
+      (click)="update()">Update</button>
+    <br/>
+    <br/>
+    <bm-building-residential-request [setBuilding]="building"></bm-building-residential-request>
+  </div>
+
+  <div class="col-md-6">
+    <bm-building-companies-list [setBuilding]="building"></bm-building-companies-list>
+  </div>
+</div>

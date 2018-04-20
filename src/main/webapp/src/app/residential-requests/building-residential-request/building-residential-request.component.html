@@ -1,0 +1,14 @@
+<div *ngIf="canRequestResidence()">
+  <div class="row">
+    <div class="col-md-4 info-label">
+      <p id="aptNumberLabel"> Apartment no.</p>
+    </div>
+    <div class="col-md-8">
+      <input id="aptNumberInput" type="number" class="form-control" [(ngModel)]="residentialRequestDto.apartmentNumber" min="1"
+        oninput="validity.valid||(value='');" #aptNumberInput name="aptNumber">
+    </div>
+  </div>
+  <button id="requestResidenceButton" [disabled]="aptNumberInput.value === ''" class="btn btn-lg btn-primary btn-block" (click)="requestResidence()">Request residence</button>
+</div>
+<button id="cancelResidentialRequestButton" *ngIf="hasResidentialRequestForBuilding()" class="btn btn-lg btn-primary btn-block"
+  (click)="cancelResidentialRequest()">Cancel residential request</button>

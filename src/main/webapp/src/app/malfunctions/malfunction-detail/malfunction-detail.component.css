@@ -1,0 +1,6 @@
+input:disabled, select:disabled, textarea:disabled {
+    border: 0;
+    padding: 0;
+    margin-bottom: 16px;
+    background-color: transparent;
+}

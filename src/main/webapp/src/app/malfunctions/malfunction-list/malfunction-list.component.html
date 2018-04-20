@@ -1,0 +1,21 @@
+<div>
+  <button *ngIf="hasAccess()" id="reportMalfunctionButton" type="button" class="btn btn-primary" (click)="reportMalfunction()">
+    Report a malfunction
+  </button>
+  <ngx-datatable class="bootstrap" [rows]="rows" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
+    [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber" [limit]="page.size" (page)='setPage($event)'>
+    <ngx-datatable-column name="Address" prop="building.address"></ngx-datatable-column>
+    <ngx-datatable-column name="Work area"></ngx-datatable-column>
+    <ngx-datatable-column name="Report date">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        {{value | date: 'MMM d, y, HH:mm'}}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column>
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <i id="details_{{row.id}}" class="fa fa-info-circle fa-2x icon-pad pointer" title="Click to see malfunction info" aria-hidden="true"
+          (click)="openDetails(row)"></i>
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+</div>

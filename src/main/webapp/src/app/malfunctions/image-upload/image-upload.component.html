@@ -1,0 +1,13 @@
+<div class="row">
+  <img [src]="imageToShow" *ngIf="imageLoaded">
+</div>
+<form class="row" [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="enabled">
+  <div class="form-group">
+    <label for="avatar">Malfunction Image</label>
+    <input id="imageInput" type="file" id="avatar" (change)="onFileChange($event)" accept="image/*" #fileInput>
+    <button id="clearImageButton" type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
+  </div>
+  <button id="submitImageButton" type="submit" [disabled]="form.invalid || loading" class=" btn btn-lg btn-primary btn-block spacing-top">Upload image
+    <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i>
+  </button>
+</form>

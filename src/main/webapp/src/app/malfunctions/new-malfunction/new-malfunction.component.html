@@ -1,0 +1,12 @@
+<form class="form-medium" (ngSubmit)="report()" #newMalfunctionForm="ngForm">
+  <h2 class="form-heading">Report malfunction</h2>
+
+  <textarea type="text" id="descriptionInput" class="form-control" [(ngModel)]="malfunction.description" placeholder="Description"
+    name="description" required autofocus></textarea>
+  <select class="bootstrap-select form-control" [(ngModel)]="malfunction.workArea" name="workArea" required>
+    <option id="workarea" *ngFor="let workArea of workAreas | workarea" value="{{workArea.key}}">{{workArea.value}}</option>
+  </select>
+
+  <button id="reportButton" [disabled]="newMalfunctionForm.form.invalid" class="btn btn-lg btn-primary btn-block spacing-top"
+    type="submit">Report</button>
+</form>

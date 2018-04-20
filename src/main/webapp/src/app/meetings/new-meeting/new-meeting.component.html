@@ -1,0 +1,27 @@
+<form class="form medium" (ngSubmit)="schedule()" #newMeetingForm="ngForm">
+  <h2 class="form-heading">Schedule a meeting</h2>
+
+  <bm-datetime-picker [selectedDate]="initDate" [selectedTime]="initDate"></bm-datetime-picker>
+
+  <br>
+  <label>Add topics</label>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let topic of meeting.topics">
+      {{topic.content}}
+      <i class="fa fa-times fa-2x align-right pointer" aria-hidden="true" (click)="removeTopic(topic)"> </i>
+    </li>
+    <li class="list-group-item">
+      <form class="form medium" (ngSubmit)="addTopic()">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" [(ngModel)]="topic" name="topic" #content required>
+          <div class="input-group-append">
+            <button [disabled]="content.value==''" class="btn btn-outline-secondary" type="button" type="submit" id="addTopicButton">Add</button>
+          </div>
+        </div>
+      </form>
+    </li>
+  </ul>
+
+  <button id="scheduleButton" [disabled]="newMeetingForm.form.invalid || datePassed()" class="btn btn-lg btn-primary btn-block spacing-top"
+    type="submit" id="scheduleButton">Schedule</button>
+</form>

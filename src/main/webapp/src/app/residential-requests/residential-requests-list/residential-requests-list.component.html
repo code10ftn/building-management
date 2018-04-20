@@ -1,0 +1,13 @@
+<div class="center">
+  <h1>
+    Residential requests</h1>
+  <br/>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let residentialRequest of residentialRequests">
+      {{residentialRequest.tenant.firstName}} {{residentialRequest.tenant.lastName}} has requested residence in apartment {{residentialRequest.apartment.number}}
+      in {{residentialRequest.apartment.building.address}}
+      <i class="fa fa-times fa-2x icon-pad align-right pointer" title="Click to decline request" aria-hidden="true" (click)="declineRequest(residentialRequest)"></i>
+      <i class="fa fa-check fa-2x icon-pad align-right pointer" title="Click to accept request" aria-hidden="true" (click)="acceptRequest(residentialRequest)"></i>
+    </li>
+  </ul>
+</div>
